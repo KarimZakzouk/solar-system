@@ -50,7 +50,6 @@ jobs:
 
     code-coverage:
       name: Code Coverage
-      needs: unit-testing
       runs-on: ubuntu-latest
       steps:
         - name: Checkout Repository
