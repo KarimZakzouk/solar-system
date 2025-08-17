@@ -22,10 +22,10 @@ jobs:
 
         steps:
         - name: Checkout Repository
-          uses: actions/checkout@v4
+          uses: actions/checkout@v5
 
-        - name: Setup NodeJS Version
-          uses: actions/setup-node@v3
+        - name: Setup NodeJS Version - ${{ matrix.node-version }}
+          uses: actions/setup-node@v4.4.0
           with:
             node-version: ${{ matrix.node-version }}
     
@@ -34,10 +34,3 @@ jobs:
     
         - name: Unit Testing
           run: npm test
-          
-        - name: Archive Test Result
-          uses: actions/upload-artifact@v4
-          with:
-            name: Mocha-Test-Result
-
-            path: test-results.xml
