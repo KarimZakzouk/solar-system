@@ -33,4 +33,6 @@ jobs:
           run: npm install
     
         - name: Unit Testing
+          env:
+            MONGO_URI: mongodb://localhost:27017/solar-system-test
           run: npm test
