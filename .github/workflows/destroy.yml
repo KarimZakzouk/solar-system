@@ -1,10 +1,7 @@
 name: Terraform Destroy Workflow
 
 on:
-  push:
-    branches:
-      - main
-      - 'feature-branch-A'
+  workflow_dispatch:
 
 jobs:
   terraform-destroy:
