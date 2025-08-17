@@ -1,16 +1,15 @@
 name: Terraform Destroy Workflow
 
 on:
-  workflow_dispatch:   # Trigger manually
   push:
     branches:
       - main
       - 'feature-branch-A'
+
 jobs:
   terraform-destroy:
     name: Terraform Destroy
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.confirm-destroy == 'YES' }} # Only run if confirmed
 
     steps:
       - name: Checkout Repository
