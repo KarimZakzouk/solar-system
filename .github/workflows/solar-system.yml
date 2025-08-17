@@ -99,12 +99,11 @@ jobs:
             username: ${{ github.repository_owner }}
             password: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: Build and Push Docker Image
+        - name: Build Docker Image
           uses: docker/build-push-action@v6
           with:
-            push: true
+            push: false
             tags: |
-              docker.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest
               ghcr.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest
 
         - name: Test Docker Image
@@ -144,3 +143,12 @@ jobs:
               docker logs solar-system-app
               exit 1
             fi
+
+        - name: Push Docker Image
+          uses: docker/build-push-action@v6
+          with:
+            push: true
+            tags: |
+              docker.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest
+              ghcr.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest
+
