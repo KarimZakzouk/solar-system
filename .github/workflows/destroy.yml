@@ -24,6 +24,11 @@ jobs:
         with:
           terraform_version: 1.5.7
 
+      - name: Delete LoadBalancer Services
+        run: |
+          aws eks update-kubeconfig --name otel-cluster --region us-east-1 || true
+          kubectl delete services --all --ignore-not-found=true || true
+
       - name: Terraform Init
         run: terraform init
         working-directory: ./Terraform
