@@ -46,6 +46,7 @@ jobs:
           with:
             name: Mocha-Test-Result-${{ matrix.os }}-${{ matrix.node-version }}
             path: test-results.xml
+            retention-days: 1
 
     code-coverage:
       name: Code Coverage
@@ -71,3 +72,4 @@ jobs:
           with:
             name: Coverage-Report
             path: coverage/
+            retention-days: 1
