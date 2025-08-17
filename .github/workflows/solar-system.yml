@@ -29,14 +29,9 @@ jobs:
           with:
             node-version: ${{ matrix.node-version }}
     
-        - name: Start MongoDB
-          uses: supercharge/mongodb-github-action@1.12.0
-          with:
-            mongodb-version: 6.0
         - name: Install Dependencies
           run: npm install
     
         - name: Unit Testing
-          env:
-            MONGO_URI: mongodb://localhost:27017/solar-system-test
           run: npm test
+          
