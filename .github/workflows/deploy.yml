@@ -79,9 +79,17 @@ jobs:
           kubectl apply -f service.yml
         working-directory: ./kubernetes
 
+        
+
       - name: Verify Deployment
         run: |
           kubectl get pods -l app=solar-system
           kubectl get services
           echo "Waiting for deployment to be ready..."
           kubectl wait --for=condition=available --timeout=300s deployment/solar-system
+
+      - name: Get Service URL
+        run: |
+          HOSTNAME=$(kubectl get svc solar-system-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+          echo "Service URL: http://$HOSTNAME:3000"
+        working-directory: ./kubernetes
