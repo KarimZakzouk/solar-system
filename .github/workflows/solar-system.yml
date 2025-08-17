@@ -110,14 +110,37 @@ jobs:
         - name: Test Docker Image
           run: |
             docker images
+            
+            # Start the container
             docker run --name solar-system-app -d \
-            -p 3000:3000 \
-            -e MONGO_URI=${{ secrets.MONGO_URI }} \
-            -e MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} \
-            -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
-            ghcr.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest \
+              -p 3000:3000 \
+              -e MONGO_URI=${{ secrets.MONGO_URI }} \
+              -e MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} \
+              -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+              ghcr.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest
+            
+            # Wait for container to start
+            sleep 15
+            
+            # Get container IP
             export IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' solar-system-app)
             echo "Container IP: $IP"
-
+            
+            # Check if container is running
+            docker ps
+            
+            # Check container logs
+            echo "Container logs:"
+            docker logs solar-system-app
+            
             echo "Testing the application..."
-            wget -q -O - 127.0.0.1:3000/live | grep "live"
+            # Test the health endpoint
+            response=$(curl -s http://127.0.0.1:3000/live)
+            echo "Response: $response"
+            if [[ $response == *"live"* ]]; then
+              echo "Health check passed!"
+            else
+              echo "Health check failed!"
+              docker logs solar-system-app
+              exit 1
+            fi
