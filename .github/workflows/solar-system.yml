@@ -106,3 +106,18 @@ jobs:
             tags: |
               docker.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest
               ghcr.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest
+
+        - name: Test Docker Image
+          run: |
+            docker images
+            docker run --name solar-system-app -d \
+            -p 3000:3000 \
+            -e MONGO_URI=${{ secrets.MONGO_URI }} \
+            -e MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} \
+            -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
+            ghcr.io/${{ secrets.DOCKER_USERNAME }}/solar-system:latest \
+            export IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' solar-system-app)
+            echo "Container IP: $IP"
+
+            echo "Testing the application..."
+            wget -q -O - 127.0.0.1:3000/live | grep "live"
