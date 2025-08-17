@@ -28,6 +28,10 @@ on:
       - main
       - 'feature-branch-A'
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   ci:
     name: Run CI Tests
@@ -41,6 +45,9 @@ jobs:
     needs: [ci]
     uses: ./.github/workflows/docker.yml
     secrets: inherit
+    permissions:
+      contents: read
+      packages: write
     with:
       push-image: true
 
