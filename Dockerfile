@@ -8,9 +8,7 @@ RUN npm install
 
 COPY . .
 
-ENV MONGO_URI=uriPlaceholder
-ENV MONGO_USERNAME=usernamePlaceholder
-ENV MONGO_PASSWORD=passwordPlaceholder
+ENV MONGO_URI="mongodb://mongo:27017/solar-system"
 
 EXPOSE 3000
 
