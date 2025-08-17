@@ -2,10 +2,6 @@ name: CI - Testing and Code Coverage
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - 'feature-branch-A'
   workflow_call:
     outputs:
       test-result:
