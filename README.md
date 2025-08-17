@@ -3,8 +3,6 @@
 
 A dynamic web application built with Node.js, MongoDB, and HTML to visualize the Solar System and its planets.
 
-![Solar System](https://github.com/KarimZakzouk/solar-system/raw/main/images/solar-system-preview.png)
-
 ---
 
 ## 🚀 Overview
