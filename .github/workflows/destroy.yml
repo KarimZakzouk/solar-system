@@ -2,12 +2,10 @@ name: Terraform Destroy Workflow
 
 on:
   workflow_dispatch:   # Trigger manually
-    inputs:
-      confirm-destroy:
-        description: 'Type YES to confirm destruction'
-        required: true
-        default: 'NO'
-
+  push:
+    branches:
+      - main
+      - 'feature-branch-A'
 jobs:
   terraform-destroy:
     name: Terraform Destroy
