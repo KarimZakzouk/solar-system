@@ -200,7 +200,7 @@ jobs:
 
         - name: Update kubeconfig
           run: |
-            aws eks update-kubeconfig --name stage-eks-cluster --region us-east-1 
+            aws eks update-kubeconfig --name otel-cluster --region us-east-1 
 
         - name: Setup kubectl
           uses: statsig-io/kubectl-via-eksctl@main
