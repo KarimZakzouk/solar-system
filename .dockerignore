@@ -1,22 +1,87 @@
-# ---------------------------------------------------------------------------------*
-# This will prevent your local modules and debug logs from being copied onto your 
-# Docker image and possibly overwriting modules installed within your image.
-# ---------------------------------------------------------------------------------*
+# ==========================================
+# Node.js Dependencies and Build Files
+# ==========================================
 node_modules
 npm-debug.log
-# ignore .git and .cache folders
+.nyc_output
+coverage
+test-results.xml
+
+# ==========================================
+# Git and Version Control
+# ==========================================
 .git
+.gitignore
 .cache
-# ignore all markdown files (md) beside all README*.md other than README-secret.md
+
+# ==========================================
+# GitHub and CI/CD Files
+# ==========================================
+.github/
+
+# ==========================================
+# Terraform Infrastructure Files
+# ==========================================
+Terraform/
+backend/
+*.tf
+*.tfvars
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# ==========================================
+# Kubernetes Deployment Files
+# ==========================================
+kubernetes/
+*.yml
+*.yaml
+!docker-compose.yml
+
+# ==========================================
+# Environment and Secrets
+# ==========================================
+.env
+.env.*
+.secrets
+.aws/
+*-credentials*
+*.pem
+*.key
+
+# ==========================================
+# Documentation and README
+# ==========================================
 *.md
 !README*.md
 README-secret.md
-# github related files
-.github/
-# nodejs releated files
-node_modules
+
+# ==========================================
+# Development and IDE Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==========================================
+# Operating System Files
+# ==========================================
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Project Specific
+# ==========================================
 solar-system.png
-.nyc_output
 .talismanrc
-coverage
-test-results.xml
+
+# ==========================================
+# Logs and Temporary Files
+# ==========================================
+*.log
+tmp/
+temp/
