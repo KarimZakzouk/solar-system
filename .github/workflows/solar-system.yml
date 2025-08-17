@@ -50,7 +50,7 @@ jobs:
 
     code-coverage:
       name: Code Coverage
-      needs: unit-testing
+      # needs: unit-testing
       runs-on: ubuntu-latest
       steps:
         - name: Checkout Repository
@@ -171,7 +171,7 @@ jobs:
         - name: Setup Terraform
           uses: hashicorp/setup-terraform@v3.1.2
           with:
-            terraform_version: 1.0.0
+            terraform_version: 1.5.7
 
         - name: Terraform Init
           run: terraform init
