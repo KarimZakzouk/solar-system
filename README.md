@@ -1,49 +1,130 @@
-# Solar System NodeJS Application
 
-A simple HTML+MongoDB+NodeJS project to display Solar System and it's planets.
+# 🌌 Solar System Node.js Application
 
----
-## Requirements
+A dynamic web application built with Node.js, MongoDB, and HTML to visualize the Solar System and its planets.
 
-For development, you will only need Node.js and NPM installed in your environement.
-
-### Node
-- #### Node installation on Windows
-
-  Just go on [official Node.js website](https://nodejs.org/) and download the installer.
-Also, be sure to have `git` available in your PATH, `npm` might need it (You can find git [here](https://git-scm.com/)).
-
-- #### Node installation on Ubuntu
-
-  You can install nodejs and npm easily with apt install, just run the following commands.
-
-      $ sudo apt install nodejs
-      $ sudo apt install npm
-
-- #### Other Operating Systems
-  You can find more information about the installation on the [official Node.js website](https://nodejs.org/) and the [official NPM website](https://npmjs.org/).
-
-If the installation was successful, you should be able to run the following command.
-
-    $ node --version
-    v8.11.3
-
-    $ npm --version
-    6.1.0
+![Solar System](https://github.com/KarimZakzouk/solar-system/raw/main/images/solar-system-preview.png)
 
 ---
-## Install Dependencies from `package.json`
-    $ npm install
 
-## Run Unit Testing
-    $ npm test
+## 🚀 Overview
 
-## Run Code Coverage
-    $ npm run coverage
+This project offers an interactive representation of the Solar System, showcasing:
 
-## Run Application
-    $ npm start
+* The Sun and its eight planets.
+* Realistic orbital mechanics and planet rotations.
+* A user-friendly interface for exploration.
 
-## Access Application on Browser
-    http://localhost:3000/
+---
+
+## 🛠️ Technologies Used
+
+* **Frontend**: HTML, CSS, JavaScript
+* **Backend**: Node.js
+* **Database**: MongoDB
+* **Containerization**: Docker
+* **Infrastructure as Code**: Terraform
+* **Orchestration**: Kubernetes
+
+---
+
+## ⚙️ Workflow & Architecture
+
+The project employs a modern DevOps pipeline to ensure efficient development and deployment:
+
+### 1. **CI/CD Pipeline**
+
+Utilizing GitHub Actions, the workflow automates:
+
+* **Testing**: Ensures code quality and functionality.
+* **Docker Image Build**: Packages the application for consistent deployments.
+* **Terraform Deployment**: Automates infrastructure provisioning.
+* **Kubernetes Deployment**: Manages application scaling and availability.
+
+### 2. **Infrastructure Management**
+
+* **Terraform**: Defines and provisions infrastructure resources.
+* **Kubernetes**: Orchestrates containerized applications for scalability and reliability.
+
+### 3. **Containerization**
+
+* **Docker**: Packages the application and its dependencies into a container, ensuring consistency across different environments.
+
+---
+
+## 📦 Setup & Installation
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+* [Node.js](https://nodejs.org/)
+* [MongoDB](https://www.mongodb.com/)
+* [Docker](https://www.docker.com/)
+* [Terraform](https://www.terraform.io/)
+* [Kubernetes](https://kubernetes.io/)
+
+### Local Development
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/KarimZakzouk/solar-system.git
+   cd solar-system
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the application:
+
+   ```bash
+   npm start
+   ```
+
+   The application will be accessible at `http://localhost:3000`.
+
+### Dockerized Development
+
+1. Build the Docker image:
+
+   ```bash
+   docker build -t solar-system .
+   ```
+
+2. Run the container:
+
+   ```bash
+   docker run -p 3000:3000 solar-system
+   ```
+
+   Access the application at `http://localhost:3000`.
+
+### Deployment with Terraform & Kubernetes
+
+1. Initialize Terraform:
+
+   ```bash
+   terraform init
+   ```
+
+2. Apply the Terraform configuration:
+
+   ```bash
+   terraform apply
+   ```
+
+   This will provision the necessary infrastructure.
+
+3. Deploy the application to Kubernetes:
+
+   ```bash
+   kubectl apply -f k8s/
+   ```
+
+   Ensure your Kubernetes cluster is set up and configured correctly.
+
 
