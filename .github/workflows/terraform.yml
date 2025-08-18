@@ -51,8 +51,3 @@ jobs:
         if: ${{ inputs.terraform-action == 'apply' || inputs.terraform-action == '' }}
         run: terraform apply -auto-approve
         working-directory: ./Terraform
-
-      - name: Terraform Destroy
-        if: ${{ inputs.terraform-action == 'destroy' }}
-        run: terraform destroy -auto-approve
-        working-directory: ./Terraform

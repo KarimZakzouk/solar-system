@@ -87,6 +87,8 @@ jobs:
           kubectl get services
           echo "Waiting for deployment to be ready..."
           kubectl wait --for=condition=available --timeout=300s deployment/solar-system
+          echo "Waiting for container to be running..."
+          kubectl wait --for=condition=Ready --timeout=180s pod -l app=solar-system
 
       - name: Get Service URL
         run: |
