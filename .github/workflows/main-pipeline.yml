@@ -23,6 +23,12 @@ on:
         required: false
         default: false
         type: boolean
+
+      skip-monitoring:
+        description: 'Skip monitoring setup'
+        required: false
+        default: false
+        type: boolean
   push:
     branches:
       - main
@@ -65,6 +71,15 @@ jobs:
     if: ${{ !inputs.skip-deployment && (success() || (inputs.skip-tests && inputs.skip-docker && inputs.skip-terraform)) }}
     needs: [terraform, docker]
     uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      image-tag: ${{ github.sha }}
+
+  monitoring:
+    name: Setup Monitoring
+    if: ${{ !inputs.skip-monitoring && (success() || (inputs.skip-tests && inputs.skip-docker && inputs.skip-terraform && inputs.skip-deployment)) }}
+    needs: [deploy]
+    uses: ./.github/workflows/monitor.yml
     secrets: inherit
     with:
       image-tag: ${{ github.sha }}

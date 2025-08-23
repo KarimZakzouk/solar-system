@@ -1,0 +1,71 @@
+name: Monitoring Setup
+
+on:
+  workflow_call:
+    inputs:
+      image-tag:
+        required: true
+        type: string
+env: 
+    AWS_REGION: us-east-1
+    EKS_CLUSTER_NAME: otel-cluster
+    GRAFANA_ADMIN_PASSWORD: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
+jobs:
+  monitoring:
+    name: Deploy Monitoring Stack
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4.3.1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name otel-cluster --region us-east-1
+
+
+      - name: Create monitoring namespace
+        run: |
+          kubectl create namespace monitoring --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Add helm repository
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo update
+
+      - name: Render values with env
+        run: |
+          envsubst < kubernetes/values.yml > tmp/values.rendered.yml
+
+      - name: Install/Upgrade kube-prometheus-stack
+        run: |
+          helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
+            --namespace monitoring \
+            --values tmp/values.rendered.yml \
+            --wait --timeout 15m
+
+
+      - name: Apply ServiceMonitor
+        run: |
+          kubectl apply -f kubernetes/servicemonitor.yaml
+
+      # Optional: expose Grafana via LoadBalancer
+      - name: Show external endpoint
+        run: |
+          kubectl -n monitoring wait --for=condition=available --timeout=10m deploy/kube-prometheus-stack-grafana
+
+          kubectl -n monitoring get svc -o wide
+
+          echo "Grafana URL"
+          kubectl -n monitoring get svc kube-prometheus-stack-grafana -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+
+          echo "Prometheus URL"
+          kubectl -n monitoring get svc kube-prometheus-stack-prometheus -o jsonpath='{.status.loadBalancer.ingress[0].ip}'

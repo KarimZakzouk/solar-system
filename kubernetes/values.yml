@@ -1,0 +1,24 @@
+grafana:
+  adminPassword: "${GRAFANA_ADMIN_PASSWORD}"
+  service:
+    type: LoadBalancer
+  persistence:
+    enabled: false
+
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+  service:
+    type: LoadBalancer
+
+
+alertmanager:
+  enabled: false
+
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 200Mi
+  admissionWebhooks:
+    enabled: true
